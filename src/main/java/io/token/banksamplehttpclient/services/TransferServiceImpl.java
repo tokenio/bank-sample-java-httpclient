@@ -1,5 +1,7 @@
 package io.token.banksamplehttpclient.services;
 
+import static io.token.proto.MoneyUtil.newMoney;
+
 import io.token.banksamplehttpclient.client.BankApiClient;
 import io.token.proto.bankapi.Bankapi.TransferRequest;
 import io.token.proto.common.money.MoneyProtos.Money;
@@ -25,11 +27,11 @@ public class TransferServiceImpl implements TransferService {
                 .transfer(TransferRequest.newBuilder()
                         .setTokenRefId(transfer.getTokenRefId())
                         .setTransferRefId(transfer.getTransferRefId())
-                        .setTransferId(transfer.getTokenTransferId()) // TODO confirm it's the correct id
-                        .setRequestedAmount(toMoney(
+                        .setTransferId(transfer.getTokenTransferId())
+                        .setRequestedAmount(newMoney(
                                 transfer.getRequestedAmount(),
                                 transfer.getRequestedAmountCurrency()))
-                        .setTransactionAmount(toMoney(
+                        .setTransactionAmount(newMoney(
                                 transfer.getTransactionAmount(),
                                 transfer.getTransactionAmountCurrency()))
                         .setSource(transfer.getAccount())
@@ -40,12 +42,5 @@ public class TransferServiceImpl implements TransferService {
                         .setMetadata(transfer.getMetadata())
                         .build())
                 .getTransactionId();
-    }
-
-    private static Money toMoney(BigDecimal amount, String currency) {
-        return Money.newBuilder()
-                .setValue(amount.toString()) // TODO confirm
-                .setCurrency(currency)
-                .build();
     }
 }

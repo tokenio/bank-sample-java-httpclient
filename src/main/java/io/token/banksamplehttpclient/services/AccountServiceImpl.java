@@ -70,7 +70,7 @@ public class AccountServiceImpl implements AccountService {
 
     private static Balance toBalance(GetBalanceResponse response) {
         return Balance.create(
-                response.getCurrent().getCurrency(), // TODO confirm
+                response.getCurrent().getCurrency(), // TODO: current or available? Does it matter
                 new BigDecimal(response.getAvailable().getValue()),
                 new BigDecimal(response.getCurrent().getValue()),
                 response.getUpdatedAtMs(),
