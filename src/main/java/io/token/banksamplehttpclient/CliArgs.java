@@ -1,4 +1,4 @@
-package io.token.banksample;
+package io.token.banksamplehttpclient;
 
 import static org.apache.commons.lang3.builder.ToStringStyle.NO_CLASS_NAME_STYLE;
 

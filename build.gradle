@@ -26,13 +26,15 @@ repositories {
     maven { url "https://plugins.gradle.org/m2/" }
 }
 
-group = 'io.token.banksample'
+group = 'io.token.banksamplehttpclient'
 version = '1.1.6'
 project.mainClassName = project.group + '.Application'
 
 ext {
     ver = [
-        tokenIntegrationSdk: '2.1.7',
+        tokenIntegrationSdk : '2.1.7',
+        retrofit            : '2.4.0',
+        okhttp3             : '3.11.0'
     ]
 }
 
@@ -42,6 +44,10 @@ dependencies {
 
     compile group: 'io.token.sdk', name: 'tokenio-sdk-integration', version: ver.tokenIntegrationSdk
     compile group: 'com.beust', name: 'jcommander', version: '1.72'
+
+    compile group: 'com.squareup.retrofit2', name: 'retrofit', version: ver.retrofit
+    compile group: 'com.squareup.retrofit2', name: 'adapter-rxjava2', version: ver.retrofit
+    compile group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: ver.okhttp3
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.apache.commons:commons-lang3:3.4'

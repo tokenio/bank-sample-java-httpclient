@@ -1,4 +1,4 @@
-package io.token.banksample;
+package io.token.banksamplehttpclient;
 
 import io.token.sdk.HttpServerBuilder;
 import io.token.sdk.ServerBuilder;
