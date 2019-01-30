@@ -1,15 +1,14 @@
 package io.token.banksamplehttpclient.services;
 
 import static io.token.proto.MoneyUtil.newMoney;
+import static io.token.proto.bankapi.Bankapi.StatusCode.SUCCESS;
 
 import io.token.banksamplehttpclient.client.BankApiClient;
 import io.token.proto.bankapi.Bankapi.TransferRequest;
-import io.token.proto.common.money.MoneyProtos.Money;
+import io.token.proto.bankapi.Bankapi.TransferResponse;
 import io.token.sdk.api.Transfer;
 import io.token.sdk.api.TransferException;
 import io.token.sdk.api.service.TransferService;
-
-import java.math.BigDecimal;
 
 /**
  * Sample implementation of the {@link TransferService}. Returns fake data.
@@ -23,7 +22,7 @@ public class TransferServiceImpl implements TransferService {
 
     @Override
     public String transfer(Transfer transfer) throws TransferException {
-        return client
+        TransferResponse response = client
                 .transfer(TransferRequest.newBuilder()
                         .setTokenRefId(transfer.getTokenRefId())
                         .setTransferRefId(transfer.getTransferRefId())
@@ -36,11 +35,17 @@ public class TransferServiceImpl implements TransferService {
                                 transfer.getTransactionAmountCurrency()))
                         .setSource(transfer.getAccount())
                         .addAllDestinations(transfer.getDestinations())
-                        .setQuote(transfer.getQuote())
-                        .setFeeResponsibility(transfer.getFeeResponsibility())
                         .setDescription(transfer.getDescription())
                         .setMetadata(transfer.getMetadata())
-                        .build())
-                .getTransactionId();
+                        .build()
+                );
+
+        if (response.getStatus() != SUCCESS) {
+            throw new TransferException(
+                    response.getStatus(),
+                    "Transfer failure with status code: " + response.getStatus().name());
+        } else {
+            return response.getTransactionId();
+        }
     }
 }
