@@ -50,7 +50,7 @@ dependencies {
     compile group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: ver.okhttp3
 
     testCompile 'junit:junit:4.12'
-    testCompile 'org.apache.commons:commons-lang3:3.4'
+    testCompile 'org.apache.commons:commons-lang3:3.9'
     testCompile 'org.assertj:assertj-core:3.8.0'
 }
 
